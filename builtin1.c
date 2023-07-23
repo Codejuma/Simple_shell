@@ -22,17 +22,17 @@ int display_history(info_t *inf)
 int unset_alias(info_t *inf, char *s)
 {
 	char *j, a;
-	int ret;
+	int rt;
 
 	j = _strchr(s, '=');
 	if (!j)
 		return (1);
 	a = *j;
 	*j = 0;
-	ret = delete_node_at_index(&(inf->alias),
+	rt = delete_node_at_index(&(inf->alias),
 			get_node_index(inf->alias, node_starts_with(inf->alias, s, -1)));
 	*j = a;
-	return (ret);
+	return (rt);
 }
 
 /**
@@ -67,11 +67,11 @@ int print_alias(list_t *n)
 
 	if (n)
 	{
-		j = _strchr(n->s, '=');
-		for (c = n->s; c <= j; c++)
+		j = _strchr(n->str, '=');
+		for (c = n->str; c <= j; c++)
 			_putchar(*c);
 		_putchar('\'');
-		_puts(p + 1);
+		_puts(j + 1);
 		_puts("'\n");
 		return (0);
 	}
