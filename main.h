@@ -226,4 +226,6 @@ int replace_alias(info_t *);
 int replace_vars(info_t *);
 int replace_string(char **, char *);
 
+/* builtin*/
+int print_alias(list_t *);
 #endif

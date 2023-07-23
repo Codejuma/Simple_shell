@@ -61,7 +61,7 @@ int set_alias(info_t *inf, char *s)
  *
  * Return: Always 0 on success, 1 on error
  */
-int print_alias(lists_t *n)
+int print_alias(list_t *n)
 {
 	char *j = NULL, *c = NULL;
 
