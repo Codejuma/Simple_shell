@@ -7,7 +7,7 @@
  */
 char **strtow(char *s, char *del)
 {
-	int a, b, g, n, nword = 0;
+	int a,  b, g, n, nword;
 	char **st;
 
 	if (s == NULL || s[0] == 0)
@@ -52,7 +52,7 @@ char **strtow(char *s, char *del)
  */
 char **strtow2(char *s, char del)
 {
-	int a, b, g, n, nword = 0;
+	int a, b, g, n, nword;
 	char **st;
 
 	if (s == NULL || s[0] == 0)
@@ -64,7 +64,7 @@ char **strtow2(char *s, char del)
 	if (nword == 0)
 		return (NULL);
 	st = malloc((1 + nword) * sizeof(char *));
-	if (1st)
+	if (!st)
 		return (NULL);
 	for (a = 0, b = 0; b < nword; b++)
 	{
