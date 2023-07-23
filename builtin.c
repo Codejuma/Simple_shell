@@ -59,14 +59,14 @@ int _mycd(info_t *inf)
 		}
 		_puts(_getenv(inf, "OLDPWD=")), _putchar('\n');
 		chdr_rt = /* TODO: what should this be? */
-			chdir((dirr = _getenv(inf, "OLDPWD=")) ? dirr : "/")
+			chdir((dirr = _getenv(inf, "OLDPWD=")) ? dirr : "/");
 	}
 	else
 		chdr_rt = chdir(inf->argv[1]);
-	if (chdir_ret == -1)
+	if (chdr_rt == -1)
 	{
 		print_error(inf, "can't cd to ");
-		_eputs(inf->[1]), _eputchar('\n');
+		_eputs(inf->argv[1]), _eputchar('\n');
 	}
 	else
 	{
