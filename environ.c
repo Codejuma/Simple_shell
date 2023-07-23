@@ -1,4 +1,5 @@
 #include "main.h"
+extern char **environ;
 /**
  * _myenv - function execute env
  * @inf: struct has args
@@ -74,8 +75,8 @@ int populate_env_list(info_t *inf)
 	list_t *nodd = NULL;
 	size_t j;
 
-	for (j = 0; get_environ[j]; j++)
-		add_node_end(&nodd, get_environ[j], 0);
+	for (j = 0; environ[j]; j++)
+		add_node_end(&nodd, environ[j], 0);
 	inf->env = nodd;
 	return (0);
 }
