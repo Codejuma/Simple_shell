@@ -67,13 +67,13 @@ int read_history(info_t *inf)
 	if (fw == -1)
 		return (0);
 	if (!fstat(fw, &stt))
-		fsize = st.st_size;
+		fsize = stt.st_size;
 	if (fsize < 2)
 		return (0);
 	buff = malloc(sizeof(char) * (fsize + 1));
 	if (!buff)
 		return (0);
-	rdlenn = read(fw. buff, fsize);
+	rdlenn = read(fw, buff, fsize);
 	buff[fsize] = 0;
 	if (rdlenn <= 0)
 		return (free(buff), 0);
