@@ -20,17 +20,17 @@ int hsh(info_t *inf, char **av)
 		q = get_input(inf);
 		if (q != -1)
 		{
-			set_inf(inf, av);
-			builting_ret = find_builtin(inf);
+			set_info(inf, av);
+			builtin_ret = find_builtin(inf);
 			if (builtin_ret == -1)
 				find_cmd(inf);
 		}
 		else if (interactive(inf))
 			_putchar('\n');
-		free_inf(inf, 0);
+		free_info(inf, 0);
 	}
 	write_history(inf);
-	free_inf(info, 1);
+	free_info(info, 1);
 	if (!interactive(inf) && inf->status)
 		exit(inf->status);
 	if (builtin_ret == -2)
@@ -56,8 +56,8 @@ int find_builtin(info_t *inf)
 		{"env", _myenv},
 		{"help", _myhelp},
 		{"history", _myhistory},
-		{"setenv", get_envi},
-		{"unsetenv", free_envi},
+		{"setenv", _mysetenv},
+		{"unsetenv", _myunsetenv},
 		{"cd", _mycd},
 		{"alias", _myalias},
 		{NULL, NULL}
@@ -98,13 +98,13 @@ void find_cmd(info_t *inf)
 	p = find_path(inf, _getenv(inf, "PATH="), inf->argv[0]);
 	if (p)
 	{
-		inf->p = p;
+		inf->path = p;
 		fork_cmd(inf);
 	}
 	else
 	{
 		if ((interactive(inf) || _getenv(inf, "PATH=")
-					|| info->argv[0][0] == '/') && exe_cmd(info, info->argv[0]))
+					|| inf->argv[0][0] == '/') && is_cmd(inf, inf->argv[0]))
 			fork_cmd(inf);
 		else if (*(inf->arg) != '\n')
 		{
@@ -132,7 +132,7 @@ void fork_cmd(info_t *inf)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(inf->p, inf->argv, _copyenviron(inf)) == -1)
+		if (execve(inf->path, inf->argv, get_environ(inf)) == -1)
 		{
 			free_info(inf, 1);
 			if (errno == EACCES)
@@ -145,7 +145,7 @@ void fork_cmd(info_t *inf)
 		wait(&(inf->status));
 		if (WIFEXITED(inf->status))
 		{
-			inf->status = WEXITSTATUS(info->status);
+			inf->status = WEXITSTATUS(inf->status);
 			if (inf->status == 126)
 				print_error(inf, "Permission denied\n");
 		}
