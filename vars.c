@@ -95,7 +95,7 @@ int replace_alias(info_t *inf)
  *
  * Return: 1 if success, otherwise 0 on fail
  */
-int replace_var(info_t *inf)
+int replace_vars(info_t *inf)
 {
 	int j = 0;
 	list_t *n;
