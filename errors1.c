@@ -57,8 +57,8 @@ int print_d(int ip, int fd)
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
-		_putchar = _eputchar;
-	if (input < 0)
+		__putchar = _eputchar;
+	if (ip < 0)
 	{
 		_abs_ = -ip;
 		__putchar('-');
