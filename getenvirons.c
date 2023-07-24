@@ -35,7 +35,7 @@ int free_envi(info_t *inf, char *var)
 
 	while (n)
 	{
-		a = starts_With(n->str, var);
+		a = starts_with(n->str, var);
 		if (a && *a == '=')
 		{
 			inf->env_changed = delete_node_at_index(&(inf->env), j);
