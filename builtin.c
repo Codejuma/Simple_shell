@@ -22,11 +22,8 @@ int _myexit(info_t *inf)
 		inf->err_num = _erratoi(inf->argv[1]);
 		return (-2);
 	}
-<<<<<<< HEAD
 	inf->err_mum = -1;
-=======
 	inf->err_num = -1;
->>>>>>> 8c5aa67f9d9892a805237db214641e81633eb31c
 	return (-2);
 }
 
@@ -62,13 +59,11 @@ int _mycd(info_t *inf)
 			return (1);
 		}
 		_puts(_getenv(inf, "OLDPWD=")), _putchar('\n');
-<<<<<<< HEAD
+
 		chdir_ret = /* TODO: what should this be? */
 			chdir((dir = _getenv(inf, "OLDPWD=")) ? dir : "/");
-=======
 		chdr_rt = /* TODO: what should this be? */
 			chdir((dirr = _getenv(inf, "OLDPWD=")) ? dirr : "/");
->>>>>>> 8c5aa67f9d9892a805237db214641e81633eb31c
 	}
 	else
 		chdr_rt = chdir(inf->argv[1]);
