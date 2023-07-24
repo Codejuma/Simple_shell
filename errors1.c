@@ -132,5 +132,5 @@ void remove_comments(char *buf)
 		{
 			buf[a] = '\0';
 			break;
-		i}
+		}
 }
