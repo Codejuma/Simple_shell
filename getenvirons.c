@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * _copyenviron - copies environs
+ * get_environ - copies environs
  * @inf: struct info
  *
  * Return: Always 0
  */
-char **_copyenviron(info_t *inf)
+char **get_environ(info_t *inf)
 {
 	if (!inf->environ || inf->env_changed)
 	{
@@ -18,13 +18,13 @@ char **_copyenviron(info_t *inf)
 }
 
 /**
- * free_envi - removes environement
+ * _unsetenv - removes environement
  * @var: environment name
  * @inf: struct inf
  *
  * Return: 1 on delete,otherwise 0
  */
-int free_envi(info_t *inf, char *var)
+int _unsetenv(info_t *inf, char *var)
 {
 	list_t *n = inf->env;
 	size_t j = 0;
@@ -50,14 +50,14 @@ int free_envi(info_t *inf, char *var)
 }
 
 /**
- * get_envi - intialize new environment
+ * _setenv - intialize new environment
  * @var: environment name
  * @val: string value
  * @inf: string info
  *
  * Return: Always 0
  */
-int get_envi(info_t *inf, char *var, char *val)
+int _setenv(info_t *inf, char *var, char *val)
 {
 	char *buf = NULL;
 	list_t *n;
