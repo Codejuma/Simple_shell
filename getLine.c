@@ -75,10 +75,10 @@ ssize_t get_input(info_t *inf)
 			a = lenn = 0;
 			inf->cmd_buf_type = CMD_NORM;
 		}
-		*buf_m = m;
+		*buff_m = m;
 		return (_strlen(m));
 	}
-	*buf_m = buff;
+	*buff_m = buff;
 	return (k);
 }
 /**
