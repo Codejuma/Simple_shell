@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * display_history - displays history list
+ * _myhistory - displays history list
  * @inf: Struct containing argument
  *
  * Return: Always 0
  */
-int display_history(info_t *inf)
+int _myhistory(info_t *inf)
 {
 	print_list(inf->history);
 	return (0);
