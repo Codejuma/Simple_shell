@@ -108,9 +108,9 @@ char *convert_number(long int n, int b, int flgs)
 	p = &buffer[49];
 	*p = '\0';
 
-	do	{
+	do {
 		*--p = arry[i % b];
-		i /= b
+		i /= b;
 	} while (i != 0);
 
 	if (sign)
