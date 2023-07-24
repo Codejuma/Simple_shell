@@ -19,10 +19,10 @@ int _exit(info_t *inf)
 			_putchar('\n');
 			return (1);
 		}
-		inf->err_msg = _erratoi(inf->argv[1]);
+		inf->err_num = _erratoi(inf->argv[1]);
 		return (-2);
 	}
-	inf->err_msg = -1;
+	inf->err_mum = -1;
 	return (-2);
 }
 
@@ -59,14 +59,14 @@ int change_dir(info_t *inf)
 		}
 		_puts(_getenv(inf, "OLDPWD=")), _putchar('\n');
 		chdir_ret = /* TODO: what should this be? */
-			chdir((dir = _getenv(inf, "OLDPWD=")) ? dir : "/")
+			chdir((dir = _getenv(inf, "OLDPWD=")) ? dir : "/");
 	}
 	else
 		chdir_ret = chdir(inf->argv[1]);
 	if (chdir_ret == -1)
 	{
 		print_error(inf, "can't cd to ");
-		_eputs(inf->[1]), _eputchar('\n');
+		_eputs(inf->argv[1]), _eputchar('\n');
 	}
 	else
 	{
