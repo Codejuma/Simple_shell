@@ -60,7 +60,7 @@ int _mycd(info_t *inf)
 		}
 		_puts(_getenv(inf, "OLDPWD=")), _putchar('\n');
 
-		chdir_rt = /* TODO: what should this be? */
+		chdr_rt = /* TODO: what should this be? */
 			chdir((dirr = _getenv(inf, "OLDPWD=")) ? dirr : "/");
 		chdr_rt = /* TODO: what should this be? */
 			chdir((dirr = _getenv(inf, "OLDPWD=")) ? dirr : "/");
