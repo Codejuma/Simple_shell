@@ -82,7 +82,7 @@ int replace_alias(info_t *inf)
 		pos = _strchr(n->str, '=');
 		if (!pos)
 			return (0);
-		pos = _strdup(p + 1);
+		pos = _strdup(pos + 1);
 		if (!pos)
 			return (0);
 		inf->argv[0] = pos;
