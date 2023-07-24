@@ -30,7 +30,7 @@ int hsh(info_t *inf, char **av)
 		free_info(inf, 0);
 	}
 	write_history(inf);
-	free_info(info, 1);
+	free_info(inf, 1);
 	if (!interactive(inf) && inf->status)
 		exit(inf->status);
 	if (builtin_ret == -2)
