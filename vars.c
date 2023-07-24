@@ -7,7 +7,7 @@
  *
  * Return: 1 if chain delimeter, 0 otherwise
  */
-int is_chain(info_t *inf, char buf, size_t *pos)
+int is_chain(info_t *inf, char *buf, size_t *pos)
 {
 	size_t i = *pos;
 
@@ -23,7 +23,7 @@ int is_chain(info_t *inf, char buf, size_t *pos)
 		i++;
 		inf->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[i] == ':')
+	else if (buf[i] == ';')
 	{
 		buf[i] = 0;
 		inf->cmd_buf_type = CMD_CHAIN;
@@ -79,6 +79,9 @@ int replace_alias(info_t *inf)
 		if (!n)
 			return (0);
 		free(inf->argv[0]);
+		pos = _strchr(n->str, '=');
+		if (!pos)
+			return (0);
 		pos = _strdup(pos + 1);
 		if (!pos)
 			return (0);
@@ -86,9 +89,8 @@ int replace_alias(info_t *inf)
 	}
 	return (1);
 }
-
 /**
- * replace_var - replaces vars
+ * replace_vars - replaces vars
  * @inf: info struct
  *
  * Return: 1 if success, otherwise 0 on fail

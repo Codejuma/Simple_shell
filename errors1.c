@@ -10,7 +10,7 @@ int _erratoi(char *str)
 	unsigned long result = 0;
 
 	if (*str == '+')
-		s++;
+		str++;
 	for (j = 0; str[j] != '\0'; j++)
 	{
 		if (str[j] >= '0' && str[j] <= '9')
@@ -23,7 +23,7 @@ int _erratoi(char *str)
 		else
 			return (-1);
 	}
-	return (results);
+	return (result);
 }
 
 /**
@@ -32,11 +32,11 @@ int _erratoi(char *str)
  * @es: string
  * Return: 0 if no numbers, otherwise -1
  */
-void print_error(info_t *inf, char es)
+void print_error(info_t *inf, char *es)
 {
 	_eputs(inf->fname);
 	_eputs(": ");
-	print_d(inf->line_cont, STDERR_FILENO);
+	print_d(inf->line_count, STDERR_FILENO);
 	_eputs(": ");
 	_eputs(inf->argv[0]);
 	_eputs(": ");
@@ -57,8 +57,8 @@ int print_d(int ip, int fd)
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
-		_putchar = eputchar;
-	if (input < 0)
+		__putchar = _eputchar;
+	if (ip < 0)
 	{
 		_abs_ = -ip;
 		__putchar('-');
@@ -86,31 +86,31 @@ int print_d(int ip, int fd)
  * convert_number - converts numbers
  * @n: number
  * @b: base
- * @flags: argument flags
+ * @flgs: argument flags
  *
  * Return: string
  */
-char *convert_number(long int n, int b, int flags)
+char *convert_number(long int n, int b, int flgs)
 {
-	static char *array;
+	static char *arry;
 	static char buffer[50];
 	char sign = 0;
 	char *p;
 	unsigned long i = n;
 
-	if (!(flags & CONVERT_UNSIGNED) && n < 0)
+	if (!(flgs & CONVERT_UNSIGNED) && n < 0)
 	{
 		i = -n;
 		sign = '-';
 	}
 
-	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	arry = flgs & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 	p = &buffer[49];
 	*p = '\0';
 
-	do	{
-		*--p = array[i % b];
-		i /= b
+	do {
+		*--p = arry[i % b];
+		i /= b;
 	} while (i != 0);
 
 	if (sign)
@@ -119,18 +119,18 @@ char *convert_number(long int n, int b, int flags)
 }
 /**
  * remove_comments - replaces '#' with '\0'
- * @buff: string address
+ * @buf: string address
  *
  * Return: Always 0
  */
-void remove_comments(char *buff)
+void remove_comments(char *buf)
 {
 	int a;
 
-	for (a = 0; buff[a] != '\0'; a++)
-		if (buff[a] == '#' && (!a || buff[a - 1] == ' '))
+	for (a = 0; buf[a] != '\0'; a++)
+		if (buf[a] == '#' && (!a || buf[a - 1] == ' '))
 		{
-			buff[a] = '\0';
+			buf[a] = '\0';
 			break;
 		}
 }

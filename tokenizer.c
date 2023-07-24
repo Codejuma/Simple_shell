@@ -15,7 +15,7 @@ char **strtow(char *s, char *del)
 	if (!del)
 		del = " ";
 	for (a = 0; s[a] != '\0'; a++)
-		if (!is_del(s[a], del) && (is_delim(s[a + 1], del) || !s[a + 1]))
+		if (!is_delim(s[a], del) && (is_delim(s[a + 1], del) || !s[a + 1]))
 			nword++;
 	if (nword == 0)
 		return (NULL);

@@ -17,12 +17,11 @@ list_t *add_list_node(list_t **head, const char *name, int val)
 	if (!new_head)
 		return (NULL);
 	_memset((void *)new_head, 0, sizeof(list_t));
-	new_head->val = val;
-	new_head->val = val;
+	new_head->num = val;
 	if (name)
 	{
-		new_head->name = _strdup(name);
-		if (!new_head->name)
+		new_head->str = _strdup(name);
+		if (!new_head->str)
 		{
 			free(new_head);
 			return (NULL);
@@ -53,11 +52,11 @@ list_t *add_node_end(list_t **head, const char *name, int val)
 	if (!new_node)
 		return (NULL);
 	_memset((void *)new_node, 0, sizeof(list_t));
-	new_node->val = val;
+	new_node->num = val;
 	if (name)
 	{
-		new_node->name = _strdup(name);
-		if (!new_node->name)
+		new_node->str = _strdup(name);
+		if (!new_node->str)
 		{
 			free(new_node);
 			return (NULL);
@@ -74,18 +73,18 @@ list_t *add_node_end(list_t **head, const char *name, int val)
 	return (new_node);
 }
 /**
- * print_list_name - prints string element of linked list
+ * print_list_str - prints string element of linked list
  * @h1: first node
  *
  * Return: size list
  */
-size_t print_list_name(const list_t *h1)
+size_t print_list_str(const list_t *h1)
 {
 	size_t j = 0;
 
 	while (h1)
 	{
-		_puts(h1->name ? h1->name : "(nil)");
+		_puts(h1->str ? h1->str : "(nil)");
 		_puts("\n");
 		h1 = h1->next;
 		j++;
@@ -112,7 +111,7 @@ int delete_node_at_index(list_t **head, unsigned int idx)
 	{
 		node = *head;
 		*head = (*head)->next;
-		free(node->name);
+		free(node->str);
 		free(node);
 		return (1);
 	}
@@ -122,7 +121,7 @@ int delete_node_at_index(list_t **head, unsigned int idx)
 		if (j == idx)
 		{
 			prev_node->next = node->next;
-			free(node->name);
+			free(node->str);
 			free(node);
 			return (1);
 		}
@@ -149,7 +148,7 @@ void free_list(list_t **head_p)
 	while (node)
 	{
 		next_node = node->next;
-		free(node->name);
+		free(node->str);
 		node = next_node;
 	}
 	*head_p = NULL;
