@@ -21,19 +21,19 @@ int is_cmd(info_t *inf, char *p)
 	return (0);
 }
 /**
- * dup_char - duplicate chars
+ * dup_chars - duplicate chars
  * @ps: path string
  * @s1: start
  * @s2: stop
  *
  * Return: new buffer
  */
-char *dup_char(char *ps, int s1, int s2)
+char *dup_chars(char *ps, int s1, int s2)
 {
 	static char buf[1024];
 	int j = 0, k = 0;
 
-	for (k = 0, j = start; j < stop; j++)
+	for (k = 0, j = s1; j < s2; j++)
 		if (ps[j] != ':')
 			buf[k++] = ps[j];
 	buf[k] = 0;
