@@ -24,7 +24,7 @@ char **_copyenviron(info_t *inf)
  *
  * Return: 1 on delete,otherwise 0
  */
-int free_envi(inf, char *var)
+int free_envi(info_t *inf, char *var)
 {
 	list_t *n = inf->env;
 	size_t j = 0;
