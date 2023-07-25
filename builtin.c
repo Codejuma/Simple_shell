@@ -23,7 +23,6 @@ int _myexit(info_t *inf)
 		return (-2);
 	}
 	inf->err_num = -1;
-	inf->err_num = -1;
 	return (-2);
 }
 
@@ -59,9 +58,6 @@ int _mycd(info_t *inf)
 			return (1);
 		}
 		_puts(_getenv(inf, "OLDPWD=")), _putchar('\n');
-
-		chdr_rt = /* TODO: what should this be? */
-			chdir((dirr = _getenv(inf, "OLDPWD=")) ? dirr : "/");
 		chdr_rt = /* TODO: what should this be? */
 			chdir((dirr = _getenv(inf, "OLDPWD=")) ? dirr : "/");
 	}
