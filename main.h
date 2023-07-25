@@ -32,6 +32,7 @@
 
 #define HIST_FILE	".simple_shell_history"
 #define HIST_MAX	4096
+extern char **environ;
 /**
  * struct liststr - singly linked list
  * @num: the number field
@@ -82,7 +83,7 @@ typedef struct passinfo
 	char **environ;
 	int env_changed;
 	int status;
-
+	
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type; /* CMD_type ||, &&, ; */
 	int readfd;

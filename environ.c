@@ -1,5 +1,4 @@
 #include "main.h"
-extern char **environ;
 /**
  * _myenv - function execute env
  * @inf: struct has args
