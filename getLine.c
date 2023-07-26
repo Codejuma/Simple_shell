@@ -26,8 +26,8 @@ ssize_t input_buf(info_t *inf, char **buff, size_t *length)
 		{
 			if ((*buff)[k - 1] == '\n')
 			{
-				(*buff)[k - 1] = '\0';
-				k++;
+				(*buff)[k - 1] = '\0'; /* remove trailing newline */
+				k--;
 			}
 			inf->linecount_flag = 1;
 			remove_comments(*buff);
@@ -47,39 +47,39 @@ ssize_t input_buf(info_t *inf, char **buff, size_t *length)
  */
 ssize_t get_input(info_t *inf)
 {
-	static char *buff;
+	static char *buff; /* the ';' command chain buf */
 	static size_t a, b, lenn;
 	ssize_t k = 0;
 	char **buff_m = &(inf->arg), *m;
 
 	_putchar(BUF_FLUSH);
 	k = input_buf(inf, &buff, &lenn);
-	if (k == -1)
+	if (k == -1) /* EOF */
 		return (-1);
-	if (lenn)
+	if (lenn) /* we have cmd left in the chain buf */
 	{
-		b = a;
-		m = buff + a;
+		b = a; /* init new iterator to current buf position */
+		m = buff + a; /* get pointer for return */
 
 		check_chain(inf, buff, &b, a, lenn);
-		while (b < lenn)
+		while (b < lenn) /* iterate to ; or end */
 		{
 			if (is_chain(inf, buff, &b))
 				break;
 
 			b++;
 		}
-		a = b + 1;
-		if (a >= lenn)
+		a = b + 1; /* increment past nulled ';'' */
+		if (a >= lenn) /* reached end of buffer? */
 		{
-			a = lenn = 0;
+			a = lenn = 0; /* reset position and len */
 			inf->cmd_buf_type = CMD_NORM;
 		}
-		*buff_m = m;
-		return (_strlen(m));
+		*buff_m = m; /* pass back pointer to current command position */
+		return (_strlen(m)); /* return length of current cmd */
 	}
-	*buff_m = buff;
-	return (k);
+	*buff_m = buff; /* else not a chain, pass back buffer from _getline() */
+	return (k); /* return length of buffer from _getline() */
 }
 /**
  * read_buf - the func is for buffer

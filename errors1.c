@@ -10,7 +10,7 @@ int _erratoi(char *str)
 	unsigned long result = 0;
 
 	if (*str == '+')
-		str++;
+		str++; /* TODO: why does this make main return 255? */
 	for (j = 0; str[j] != '\0'; j++)
 	{
 		if (str[j] >= '0' && str[j] <= '9')

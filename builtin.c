@@ -8,7 +8,7 @@ int _myexit(info_t *inf)
 {
 	int exck;
 
-	if (inf->argv[1])
+	if (inf->argv[1]) /* If there is an exit arguement */
 	{
 		exck = _erratoi(inf->argv[1]);
 		if (exck == -1)
@@ -89,6 +89,6 @@ int _myhelp(info_t *inf)
 	arg_ray = inf->argv;
 	_puts("help works. Function to be implemented \n");
 	if (0)
-		_puts(*arg_ray);
+		_puts(*arg_ray); /* temp att_unused workaround */
 	return (0);
 }
