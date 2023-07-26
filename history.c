@@ -18,6 +18,7 @@ char *get_history_file(info_t *inf)
 	_strcpy(buff, dirr);
 	_strcat(buff, "/");
 	_strcat(buff, HIST_FILE);
+	free(buff);
 	return (buff);
 }
 /**
