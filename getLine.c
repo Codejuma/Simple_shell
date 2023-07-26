@@ -13,10 +13,9 @@ ssize_t input_buf(info_t *inf, char **buff, size_t *length)
 
 	if (!*length) /* if nothing left fill it */
 	{
-		/*bree((void **)inf->cmd_buf);*/
 		free(*buff);
 		*buff = NULL;
-		signal(SIGINT, sigintHandler);
+		signal(SIGINT, SIG_DFL);
 #if USE_GETLINE
 		k = getline(buff, &lep, stdin);
 #else
@@ -47,10 +46,10 @@ ssize_t input_buf(info_t *inf, char **buff, size_t *length)
  */
 ssize_t get_input(info_t *inf)
 {
-	static char *buff; /* the ';' command chain buf */
-	static size_t a, b, lenn;
+	char *buff = 0; /* the ';' command chain buf */
+	size_t a = 0, b = 0, lenn = 0;
 	ssize_t k = 0;
-	char **buff_m = &(inf->arg), *m;
+	char **buff_m = &(inf->arg), *m = 0;
 
 	_putchar(BUF_FLUSH);
 	k = input_buf(inf, &buff, &lenn);
@@ -92,11 +91,13 @@ ssize_t read_buf(info_t *inf, char *buff, size_t *j)
 {
 	ssize_t k = 0;
 
-	if (*j)
-		return (0);
-	k = read(inf->readfd, buff, READ_BUF_SIZE);
-	if (k >= 0)
-		*j = k;
+	if (*j >= lenn)
+	{
+		*j = 0;
+	lenn = read(inf->readfd, buff, READ_BUF_SIZE);
+	}
+	
+	k = lenn - *j
 	return (k);
 }
 /**
@@ -108,8 +109,8 @@ ssize_t read_buf(info_t *inf, char *buff, size_t *j)
  */
 int _getline(info_t *inf, char **ptrr, size_t *leng)
 {
-	static char buff[READ_BUF_SIZE];
-	static size_t j, lenn;
+	char buff[READ_BUF_SIZE];
+	size_t j, lenn;
 	size_t m;
 	ssize_t k = 0, str = 0;
 	char *n = NULL, *new_n = NULL, *b;

@@ -35,7 +35,7 @@ int _myexit(info_t *inf)
 int _mycd(info_t *inf)
 {
 	char *str, *dirr, buffer[1024];
-	int chdr_rt;
+	int chdir_ret, access_ret;
 
 	str = getcwd(buffer, 1024);
 	if (!str)
@@ -44,10 +44,10 @@ int _mycd(info_t *inf)
 	{
 		dirr = _getenv(inf, "HOME=");
 		if (!dirr)
-			chdr_rt = /* TODO: what should this be? */
+			chdir_ret = /* TODO: what should this be? */
 				chdir((dirr = _getenv(inf, "PWD=")) ? dirr : "/");
 		else
-			chdr_rt = chdir(dirr);
+			chdir_ret = chdir(dirr);
 	}
 	else if (_strcmp(inf->argv[1], "-") == 0)
 	{
@@ -58,12 +58,21 @@ int _mycd(info_t *inf)
 			return (1);
 		}
 		_puts(_getenv(inf, "OLDPWD=")), _putchar('\n');
-		chdr_rt = /* TODO: what should this be? */
+		chdir_ret = /* TODO: what should this be? */
 			chdir((dirr = _getenv(inf, "OLDPWD=")) ? dirr : "/");
 	}
 	else
-		chdr_rt = chdir(inf->argv[1]);
-	if (chdr_rt == -1)
+	{
+		access_ret = access(info->argv[1], F_OK);
+		if (access_ret == -1)
+		{
+			print_error(inf, "can't cd to ");
+			_eputs(inf->argv[1]), _eputchar('\n');
+		}
+		else
+			chdir_ret = chdir(inf->argv[1]);
+	}
+	if (chdir_ret == -1)
 	{
 		print_error(inf, "can't cd to ");
 		_eputs(inf->argv[1]), _eputchar('\n');
