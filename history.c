@@ -78,6 +78,7 @@ int read_history(info_t *inf)
 	buff[fsize] = 0;
 	if (rdlenn <= 0)
 		return (free(buff), 0);
+	free (buff);
 	close(fw);
 	for (j = 0; j < fsize; j++)
 		if (buff[j] == '\n')
@@ -112,6 +113,7 @@ int build_history_list(info_t *inf, char *buff, int lcont)
 
 	if (!inf->history)
 		inf->history = nodd;
+	free (nodd);
 	return (0);
 }
 /**
