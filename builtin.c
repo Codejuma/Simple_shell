@@ -62,16 +62,7 @@ int _mycd(info_t *inf)
 			chdir((dirr = _getenv(inf, "OLDPWD=")) ? dirr : "/");
 	}
 	else
-	{
-		access_ret = access(inf->argv[1], F_OK);
-		if (access_ret == -1)
-		{
-			print_error(inf, "can't cd to ");
-			_eputs(inf->argv[1]), _eputchar('\n');
-		}
-		else
-			chdir_ret = chdir(inf->argv[1]);
-	}
+		chdir_ret = chdir(inf->argv[1]);
 	if (chdir_ret == -1)
 	{
 		print_error(inf, "can't cd to ");
