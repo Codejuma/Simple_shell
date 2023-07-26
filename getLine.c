@@ -91,13 +91,11 @@ ssize_t read_buf(info_t *inf, char *buff, size_t *j)
 {
 	ssize_t k = 0;
 
-	if (*j >= lenn)
-	{
-		*j = 0;
-	lenn = read(inf->readfd, buff, READ_BUF_SIZE);
-	}
-	
-	k = lenn - *j
+	if (*j)
+		return (0);
+	k = read(inf->readfd, buff, READ_BUF_SIZE);
+	if (k >= 0)
+		*j = k;
 	return (k);
 }
 /**
@@ -110,7 +108,7 @@ ssize_t read_buf(info_t *inf, char *buff, size_t *j)
 int _getline(info_t *inf, char **ptrr, size_t *leng)
 {
 	char buff[READ_BUF_SIZE];
-	size_t j, lenn;
+	size_t j = 0, lenn = 0;
 	size_t m;
 	ssize_t k = 0, str = 0;
 	char *n = NULL, *new_n = NULL, *b;
