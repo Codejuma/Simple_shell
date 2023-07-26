@@ -44,6 +44,7 @@ char **list_to_strings(list_t *fn)
 		}
 		st = _strcpy(st, nodd->str);
 		sts[j] = st;
+		free(st);
 	}
 	sts[j] = NULL;
 	return (sts);

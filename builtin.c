@@ -63,7 +63,7 @@ int _mycd(info_t *inf)
 	}
 	else
 	{
-		access_ret = access(info->argv[1], F_OK);
+		access_ret = access(inf->argv[1], F_OK);
 		if (access_ret == -1)
 		{
 			print_error(inf, "can't cd to ");

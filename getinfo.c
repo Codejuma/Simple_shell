@@ -32,6 +32,7 @@ void set_info(info_t *inf, char **avg)
 			{
 				inf->argv[0] = _strdup(inf->arg);
 				inf->argv[1] = NULL;
+				free(inf->argv);
 			}
 		}
 		for (j = 0; inf->argv && inf->argv[j]; j++)

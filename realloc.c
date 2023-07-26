@@ -55,5 +55,6 @@ void *_realloc(void *ptrr, unsigned int pr_size, unsigned int nxt_size)
 	while (pr_size--)
 		c[pr_size] = ((char *)ptrr)[pr_size];
 	free(ptrr);
+	free(c);
 	return (c);
 }

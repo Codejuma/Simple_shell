@@ -91,13 +91,11 @@ ssize_t read_buf(info_t *inf, char *buff, size_t *j)
 {
 	ssize_t k = 0;
 
-	if (*j >= lenn)
-	{
-		*j = 0;
-	lenn = read(inf->readfd, buff, READ_BUF_SIZE);
-	}
-	
-	k = lenn - *j
+	if (*j)
+		return 0;
+	k = read(inf->readfd, buff, READ_BUF_SIZE);
+	if (k >= 0)
+		*j = k;
 	return (k);
 }
 /**

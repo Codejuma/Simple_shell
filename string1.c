@@ -38,6 +38,7 @@ char *_strdup(const char *s)
 		return (NULL);
 	for (len++; len--;)
 		rt[len] = *--s;
+	free(rt);
 	return (rt);
 }
 /**
