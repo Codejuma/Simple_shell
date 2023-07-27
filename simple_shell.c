@@ -8,13 +8,13 @@
 char **_split_string(char *s, char sp)
 {
 	int size = TOK_BUFSIZE, i = 0;
-	char *tkns = _calloc(sizeof(char *), size);
+	char **tkns = calloc(sizeof(char *), size);
 	char *tkn;
 
 	if (s == NULL || tkns == NULL)
 		return (NULL);
 
-	tkn = _strchr(s, sp); /* Find the first separator */
+	tkn = strchr(s, sp); /* Find the first separator */
 	while (tkn != NULL)
 	{
 		*tkn = '\0'; /* Null-terminate the token */
@@ -24,7 +24,7 @@ char **_split_string(char *s, char sp)
 		if (i >= size)
 		{
 			size += TOK_BUFSIZE;
-			tkns = _realloc(tkns, sizeof(char *) * size);
+			tkns = realloc(tkns, sizeof(char *) * size);
 			if (tkns == NULL)
 			{
 				perror("Error allocating memory");

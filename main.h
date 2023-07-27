@@ -31,6 +31,6 @@ void *_calloc(unsigned int nmemb, unsigned int size);
 int _stat(char **cmd, char **path);
 int *_error(char *argv, int count, char *args);
 void handle_signal(int sig);
-
+int *_error(char *av, int cnt, char *args);
 
 #endif
