@@ -1,39 +1,42 @@
 #include "main.h"
 /**
- * main - funct of prompt input
- * @ac: no of args
- * @av: array of args
- * @env: environ var
- * Return: EXIT_SUCCESS
+ * main - entr pt
+ * @ac: arg ct
+ * @av: arg vc
+ * Return: 0 otherwise 1
  */
-int main(int ac __attribute__((unused)), char **av, char **env)
+int int main(int ac, char **av)
 {
-	char *ln;
-	char **args, **path;
-	int count = 0, status = 0;
-	(void) av;
-	signal(SIGINT, handle_signal);
-	while (1)
-	{
-		prompt();
-		/* read input and return string */
-		ln = read_input();
-		/* separates string to get command and args */
-		args = sparse_str(ln, env);
+	info_t inf[] = { INFO_INIT };
+	int j = 2;
 
-		if ((_strcmp(args[0], "\n") != 0) && (_strcmp(args[0], "env") != 0))
+	asm ( "mov %1, %0\n\t"
+			"add $3, %0"
+			: "=r" (j)
+			: "r" (j));
+
+	if (ac == 2)
+	{
+		j = open(av[1], O_RDONLY);
+		if (j == -1)
 		{
-			count += 1;
-			path = search_path(env);
-			 /* busca PATH var enviorn */
-			status = _stat(args, path);
-			child_process(av, args, env, status, count);
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
+			{
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
+				exit(127);
+			}
+			return (EXIT_FAILURE);
 		}
-		else
-		{
-			free(args);
-		}
-		free(ln);
+		inf->readfd = j;
 	}
+	populate_env_list(inf);
+	read_history(inf);
+	hsh(inf, av);
 	return (EXIT_SUCCESS);
 }

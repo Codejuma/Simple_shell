@@ -1,59 +1,79 @@
 #include "main.h"
 /**
- * _strdup - func cope str
- * @s: the array
- * Return: return ptr
+ * _strcpy - copy th strs
+ * @ds: the destin
+ * @sr: the source
+ * Return: ptr to destin
  */
-char *_strdup(char *s)
+char *_strcpy(char *ds, char *sr)
 {
-	int i, j;
-	char *str = NULL;
+	int j = 0;
 
-	if (s == NULL)
-		return (0);
-	for (i = 0; s[i]; i++)
-		;
-
-	i++;
-	str = malloc(i * sizeof(char *));
-	if (!str)
-		return (NULL);
-
-	for (j = 0; j < i; j++)
+	if (ds == sr || sr == 0)
+		return (ds);
+	while (sr[j])
 	{
-		str[j] = s[j];
+		ds[j] = sr[j];
+		j++;
 	}
-	free(str);
-	return (str);
+	ds[j] = 0;
+	return (ds);
 }
 /**
- * _itoa - func int to ascii
- * @num: number
- * @base: the bs
- * Return: return char
+ * _strdup - func str
+ * @str: str the dup
+ * Return: ptr dup
  */
-char *_itoa(int num, int base)
+char *_strdup(const char *str)
 {
-	static char *array = "0123456789abcdef";
-	static char buffer[50];
-	char sign = 0;
-	char *ptr;
-	unsigned long n = num;
+	int len = 0;
+	char *rt;
 
-	if (num < 0)
+	if (str == NULL)
+		return (NULL);
+
+	while (*str++)
+		len++;
+	rt = calloc(sizeof(char) * (len + 1));
+	if (!rt)
+		return (NULL);
+	for (len++; len--; )
+		rt[len] = *--str;
+	return (rt);
+}
+/**
+ * _puts - func the input str
+ * @s: str print
+ * Return: void
+ */
+void _puts(char *s)
+{
+	int j = 0;
+
+	if (!s)
+		return;
+	while (s[j] != '\0')
 	{
-		n = -num;
-		sign = '-';
+		_putchar(s[j]);
+		j++;
 	}
-	ptr = &buffer[49];
-	*ptr = '\0';
+}
+/**
+ * _putchar - writes the char c to stdout
+ * @c: char print
+ * Return: 1
+ */
+int _putchar(char c)
+{
+	static int j;
+	static char buf[WRITE_BUF_SIZE];
 
-	do {
-		*--ptr = array[n % base];
-		n /= base;
-	} while (n != 0);
-
-	if (sign)
-		*--ptr = sign;
-	return (ptr);
+	if (c == BUF_FLUSH || j >= WRITE_BUF_SIZE)
+	{
+		write(1, buf, j);
+		j = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[j++] = c;
+	return (1);
 }

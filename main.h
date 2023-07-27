@@ -29,9 +29,21 @@ char **search_path(char **environ);
 void *_calloc(unsigned int nmemb, unsigned int size);
 
 int _stat(char **cmd, char **path);
-void *_error(char *argv, int count, char *args);
+int *_error(char *argv, int count, char *args);
 void handle_signal(int sig);
-void *_error(char *av, int cnt, char *args);
+
 int main(int ac __attribute__((unused)), char **av, char **env);
 void func_printenv(char **environ);
+
+char *str_concat(char *s1, char *s2);
+int _putchar(char c);
+int _strlen(const char *s);
+void _puts(char *s);
+void prompt(void);
+char **sparse_str(char *line, char **env);
+char *read_input(void);
+
+int func_exit(char **args);
+char *_itoa(int num, int base);
+int _strcmp(char *s1, char *s2);
 #endif

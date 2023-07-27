@@ -1,84 +1,69 @@
 #include "main.h"
 /**
- * _puts - func the str
- * @s: the str
- * Return: nothing to return
+ * _strlen - func len str
+ * @str: str len
+ * Return: int len
  */
-void _puts(char *s)
+int _strlen(char *str)
 {
-	int j;
+	int j = 0;
 
-	for (j = 0 ; s[j] != '\0' ; j++)
-	{
-		_putchar(s[j]);
-	}
-	_putchar('\n');
-}
-/**
- * _strlen - the func str
- * @s: use int
- * Return: return the len str
- */
-int _strlen(const char *s)
-{
-	int j;
+	if (!str)
+		return (0);
 
-	j = 0;
-	while (s[j] != '\0')
-	{
+	while (*str++)
 		j++;
-	}
-	return ((j + 1));
+	return (j);
 }
 /**
- * _putchar - writes the character c to stdout
- * @c: the character to print
- * Return: 1
+ * _strcmp - funct of lex compar
+ * @str1: 1st str
+ * @str2: 2rd str
+ * Return: negative othewise posi
  */
-int _putchar(char c)
+int _strcmp(char *str1, char *str2)
 {
-	return (write(1, &c, 1));
+	while (*str1 && *str2)
+	{
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+
+		str1++;
+		str2++;
+	}
+	if (*str1 == *str2)
+		return (0);
+	else
+		return (*str1 < *str2 ? -1 : 1);
 }
 /**
- * str_concat - funct pack ptr to array
- * @s1: arr 1
- * @s2: arr 2
- * Return: return array
+ * starts_with - func of hystakc
+ * @haystack: str search
+ * @needle: the str find
+ * Return: addrss of next
  */
-char *str_concat(char *s1, char *s2)
+char **starts_with(const char *haystack, const char *needle)
 {
-	char *dst;
-	unsigned int i, j, size;
-
-	/* If the array is empty */
-	if (s1 == NULL)
-		s1 = "";
-
-	if (s2 == NULL)
-		s2 = "";
-
-	/* count size total */
-	size = (_strlen(s1) + _strlen(s2) + 1);
-
-	/* malloc */
-	dst = (char *) malloc(size * sizeof(char));
-
-	if (dst == 0)
-	{
-		return (NULL);
-	}
-
-	/* concatenate arrays */
-	for (i = 0; *(s1 + i) != '\0'; i++)
-		*(dst + i) = *(s1 + i);
-
-	for (j = 0; *(s2 + j) != '\0'; j++)
-	{
-		*(dst + i) = *(s2 + j);
-		i++;
-	}
-	dst[i] = '\0';
-	free(dst);
-
-	return (dst);
+	while (*needle)
+		if (*needle++ != *haystack++)
+			return (NULL);
+	return ((char *)haystack);
 }
+/**
+ * _strcat - funct concat 2 str
+ * @dest: the destin
+ * @src: the source
+ * Return: return ptr
+ */
+char *_strcat(char *dest, char *src)
+{
+	char *rt = dest;
+
+	while (*dest)
+		dest++;
+	while(*src)
+		*dest++ = *src++;
+	*dest = *src;
+	return (rt);
+}
+

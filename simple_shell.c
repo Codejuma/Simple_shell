@@ -1,114 +1,149 @@
 #include "main.h"
 /**
- * _split_string - funct that split tks
- * @s: the str sep
- * @sp: the separt
- * Return: array of str
+ * hsh - funct shell loop
+ * @inf: the par and return inf
+ * @avg: arg vector
+ * Return: 0 otherwise 1
  */
-char **_split_string(char *s, char sp)
+int hsh(info_t *inf, char **avg)
 {
-	int size = TOK_BUFSIZE, i = 0;
-	char **tkns = calloc(sizeof(char *), size);
-	char *tkn;
+	ssize_t k = 0;
+	int j = 0;
 
-	if (s == NULL || tkns == NULL)
-		return (NULL);
-
-	tkn = strchr(s, sp); /* Find the first separator */
-	while (tkn != NULL)
+	while (k != -1 && j != -2)
 	{
-		*tkn = '\0'; /* Null-terminate the token */
-		tkns[i] = s; /* Assign the token to array */
-		i++;
-
-		if (i >= size)
+		clear_info(inf);
+		if (interactive(inf))
+			_puts("$ ");
+		_eputchar(BUF_FLUSH);
+		k = get_input(inf);
+		if (k != -1)
 		{
-			size += TOK_BUFSIZE;
-			tkns = realloc(tkns, sizeof(char *) * size);
-			if (tkns == NULL)
-			{
-				perror("Error allocating memory");
-				return (NULL);
-			}
+			set_info(inf, avg);
+			j = find_builtin(inf);
+			if (j == -1)
+				find_cmd(inf);
 		}
-		s = tkn + 1; /* Move to next token */
-		tkn = strchr(s, sp); /* Find the next separator */
+		else if (interactive(inf))
+			_putchar('\n');
+		free_info(inf, 0);
 	}
-	tkns[i] = s; /* assign the last token */
-	tkns[i + 1] = NULL; /* Null-terminate the array */
-
-	return (tkns);
+	write_history(inf);
+	free_info(inf, 1);
+	if (!interactive(inf) && inf->status)
+		exit(inf->status);
+	if (j == -2)
+	{
+		if (inf->err-num == -1)
+			exit(inf->status);
+		exit(inf->err_num);
+	}
+	return (j);
 }
 /**
- * _which - funct of the path
- * @fdp: the pth passed
- * Return: the path
+ * find_builtin - funct find builtin coms
+ * @inf: the par and str
+ * Return: -1 , 0, 1 and 2
  */
-char **_which(char *fdp)
+int find_builtin(info_t *inf)
 {
-	if (fdp == NULL)
-		return (NULL);
+	int i, j = -1;
+	builtin_table builtintbl[] = {
+		{"exit", _myexit},
+		{"env", _myenv},
+		{"help", _myhelp},
+		{"history", _myhistory},
+		{"setenv", _mysetenv},
+		{"unsetenv", _myunsetenv},
+		{"cd", _mycd},
+		{"alias", _myalias},
+		{NULL, NULL}
+	};
 
-	return (_split_string(fdp, ':'));
+	for (i = 0; builtintbl[i].type; i++)
+		if (_strcmp(inf->argv[0], builtintbl[i].type) == 0)
+		{
+			inf->line_count++;
+			j = builtintbl[i].func(inf);
+			break;
+		}
+	return (j);
 }
 /**
- * child_process - func execute the path
- * @args: the comm ex
- * @env: the environ var
- * @status_main: status var
- * @av: prog name
- * @cnt: the prompt cnt
- * Return: 1
+ * find_cmd - func to find PATH
+ * @inf: the par and struc
+ * Return: nothing
  */
-int child_process(char **av, char **args, char **env, int status_main, int cnt)
+void find_cmd(info_t *inf)
 {
-	pid_t pid;
-	int status;
+	char *path = NULL;
+	int i, j;
 
-	if (args == NULL)
-		return (-1);
-
-	pid = fork();
-	if (pid < 0)
+	inf->path = inf->argv[0];
+	if (inf->linecount_flag == 1)
 	{
-		perror("./hsh: ");
-		exit(1);
+		inf->line_count++;
+		inf->linecount_flag = 0;
 	}
-	else if (pid == 0)
+	for (i = 0, j = 0; info->arg[i]; i++)
+		if (!is_delim(info->arg[i], " \t\n"))
+			j++;
+	if (!j)
+		return;
+
+	path = find_path(inf, _getenv(inf, "PATH="), inf->argv[0]);
+	if (path)
 	{
-		if (execve(args[0], args, env) == -1)
-		{
-			_error(av[0], cnt, args[0]);
-			free(args);
-			exit(1);
-		}
-		exit(0);
+		inf->path = path;
+		fork_cmd(inf);
 	}
 	else
 	{
-		if (status_main == 1)
-			free(args[0]);
-		free(args);
-		waitpid(pid, &status, WUNTRACED);
-	}
-	return (1);
-}
-/**
- * search_path - funct gets the apth
- * @environ: var environment
- * Return: tkn path
- */
-char **search_path(char **environ)
-{
-	int j = 0;
-	char **tkn_pt;
-
-	for (; environ[j] != NULL ; j++)
-	{
-		if (environ[j][0] == 'P' && environ[j][2] == 'T')
+		if ((interactive(inf) || _getenv(inf, "PATH=") || inf->argv[0][0] == '/') && is_cmd(inf, inf->argv[0]))
+			fork_cmd(inf);
+		else if (*(inf->arg) != '\n')
 		{
-			tkn_pt = _which(environ[j]);
+			inf->status = 127;
+			print_error(inf, "not found\n");
 		}
 	}
-	return (tkn_pt);
 }
+/**
+ * fork_cmd - funct that forks
+ * @inf: the par struct
+ * Return: nothing
+ */
+void fork_cmd(info_t *inf)
+{
+	pid_t c_pid;
+
+	c_pid = fork();
+	if (c_pid == -1)
+	{
+		/* TODO: Put error func */
+		perror("Error:");
+		return;
+	}
+	if (c_pid == 0)
+	{
+		if (execve(inf->path, inf->argv, get_environ(inf)) == -1)
+		{
+			free_info(inf, 1);
+			if (errno == EACCES)
+				exit(126);
+			exit(1);
+		}
+		/*TODO: Put error function */
+	}
+	else
+	{
+		wait(&(inf->status));
+		if (WIFEXITED(inf->status))
+		{
+			inf->status = WEXITSTATUS(inf->status);
+			if (inf->status == 126)
+				print_error(inf, "Permission denied\n");
+		}
+	}
+}
+
