@@ -1,15 +1,15 @@
 #include "main.h"
 /**
- * bfree - func free the ptr and NULL
- * @ptrr: the addrs otr
- * Return: 1 otherwise 0
+ * bfree - function that free the pointer
+ * @p: the pointer address
+ * Return: 1 for free othewise 0
  */
-int bfree(void **ptrr)
+int bfree(void **p)
 {
-	if (ptrr && *ptrr)
+	if (p && *p)
 	{
-		free(*ptrr);
-		*ptrr = NULL;
+		free(*p);
+		*p = NULL;
 		return (1);
 	}
 	return (0);
