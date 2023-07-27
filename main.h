@@ -29,8 +29,9 @@ char **search_path(char **environ);
 void *_calloc(unsigned int nmemb, unsigned int size);
 
 int _stat(char **cmd, char **path);
-int *_error(char *argv, int count, char *args);
+void *_error(char *argv, int count, char *args);
 void handle_signal(int sig);
-int *_error(char *av, int cnt, char *args);
-
+void *_error(char *av, int cnt, char *args);
+int main(int ac __attribute__((unused)), char **av, char **env);
+void func_printenv(char **environ);
 #endif

@@ -11,14 +11,15 @@ void handle_signal(int sig)
 	write(STDOUT_FILE, prompt, _strlen(prompt));
 	fflush(stdout);
 }
+
 /**
  * _error - funct of errors
  * @argv: prog name
  * @count: no of prompt
  * @args: command
- * Return: 0
+ * Return: nothing
  */
-int *_error(char *argv, int count, char *args)
+void *_error(char *argv, int count, char *args)
 {
 	char *num;
 	
@@ -30,8 +31,6 @@ int *_error(char *argv, int count, char *args)
 	write(2, ": ", 2);
 	write(2, args, _strlen(args));
 	perror(" ");
-
-	return (0);
 }
 /**
  * _stat - func for status
