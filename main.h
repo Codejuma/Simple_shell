@@ -11,8 +11,26 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <fcntl.h>
+#define TOK_BUFSIZE 50
+#define TOK_DELIM " \t\r\n\a"
+extern char **environ;
 
 /* toem_memory.c */
 int bfree(void **);
+
+/* toem_simple_shell.c*/
+void execute_command(char *comm);
+char **_split_string(char *s, char sp);
+char **_which(char *fdp);
+int child_process(char **av, char **args, char **env, int status_main, int cnt);
+char **search_path(char **environ);
+
+void *_calloc(unsigned int nmemb, unsigned int size);
+
+int _stat(char **cmd, char **path);
+int *_error(char *argv, int count, char *args);
+void handle_signal(int sig);
+
 
 #endif
