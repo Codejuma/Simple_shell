@@ -150,5 +150,5 @@ int replace_string(char *i1, char i2)
 {
 	free(*i1);
 	*i1 = i2;
-	return (1)
+	return (1);
 }

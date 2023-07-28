@@ -12,7 +12,7 @@ int is_cmd(info_t *inf, char *p)
 	struct stat st;
 
 	(void)inf;
-	if (!p || stat(p, & st))
+	if (!p || stat(p, &st))
 		return (0);
 
 	if (st.st_mode & S_IFREG)

@@ -43,7 +43,7 @@ list_t *add_node(list_t **h, const char *s, int len)
  */
 list_t *add_node_end(list_t **h, const char *s, int len)
 {
-	list_t *new,*n;
+	list_t *new, *n;
 
 	if (!h)
 		return (NULL);
@@ -59,7 +59,7 @@ list_t *add_node_end(list_t **h, const char *s, int len)
 		if (!new->str)
 		{
 			free(new);
-			return (NULL)
+			return (NULL);
 		}
 	}
 	if (n)
@@ -74,7 +74,7 @@ list_t *add_node_end(list_t **h, const char *s, int len)
 }
 /**
  * print_list_str - prints only string
- * @head: pointer 
+ * @head: pointer
  *
  * Return: size of list
  */
@@ -120,7 +120,7 @@ int delete_node_at_index(list_t **h, unsigned int index)
 	{
 		if (j == index)
 		{
-			prev_n->next =->next;
+			prev_n->next = n->next;
 			free(n->s);
 			free(n);
 			return (1);
