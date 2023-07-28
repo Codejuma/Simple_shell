@@ -12,7 +12,7 @@ char *get_history_file(info_t *inf)
 	dirr = _getenv(inf, "HOME=");
 	if (!dirr)
 		return (NULL);
-	buf = calloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE) + 2));
+	buff = (char*)calloc(_strlen(dirr) + _strlen(HIST_FILE) + 2, sizeof(char));
 	if (!buff)
 		return (NULL);
 	buff[0] = 0;
@@ -76,7 +76,7 @@ int read_history(info_t *inf)
 		fsize = st.st_size;
 	if (fsize < 2)
 		return (0);
-	buff = calloc(sizeof(char) * (fsize + 1));
+	buff = (char*)calloc(fsize + 1, sizeof(char));
 	if (!buff)
 		return (0);
 	rdlen = read(fd, buff, fsize);
@@ -91,7 +91,7 @@ int read_history(info_t *inf)
 			build_history_list(inf, buff + last, linecount++);
 			last = j + 1;
 		}
-	if (last !+ j)
+	if (last != j)
 		build_history_list(inf, buff + last, linecount++);
 	free(buff);
 	inf->histcount = linecount;
@@ -111,6 +111,23 @@ int read_history(info_t *inf)
  */
 int build_history_list(info_t *inf, char *buff, int linecount)
 {
+	list_t *n = NULL;
+
+	if (inf->history)
+		n = inf->history;
+	add_node_end(&n, buff, linecount);
+
+	if (!inf->history)
+		inf->history = n;
+	return (0);
+}
+/**
+ * renumber_history - funct renumbers the hist list
+ * @inf: struct having args
+ * Return: the new count
+ */
+int renumber_history(info_t *inf)
+{
 	list_t *n = inf->history;
 	int j = 0;
 
@@ -119,6 +136,5 @@ int build_history_list(info_t *inf, char *buff, int linecount)
 		n->num = j++;
 		n = n->next;
 	}
-
 	return (inf->histcount = j);
 }

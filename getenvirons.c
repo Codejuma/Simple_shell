@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * _get_environ - returns the string array copy
+ * get_environ - returns the string array copy
  * @inf: struct info
  *
  * Return: Always 0
  */
-char **_get_environ(info_t *inf)
+char **get_environ(info_t *inf)
 {
 	if (!inf->environ || inf->env_changed)
 	{
