@@ -24,7 +24,7 @@ char **_get_environ(info_t *inf)
  *
  * Return: 1 on delete, otherwise 0
  */
-int _unsetenv(into_t *inf, char *var)
+int _unsetenv(info_t *inf, char *var)
 {
 	list_t *n = inf->env;
 	size_t j = 0;
@@ -35,7 +35,7 @@ int _unsetenv(into_t *inf, char *var)
 
 	while (n)
 	{
-		a = starts_with(n->s, var);
+		a = starts_with(n->str, var);
 		if (a && *a == '=')
 		{
 			inf->env_changed = delete_node_at_index(&(inf->env), j);
@@ -66,7 +66,7 @@ int _setenv(info_t *inf, char *var, char *val)
 	if (!var || !val)
 		return (0);
 
-	buf = calloc(_strlen(var) + _strlen(val) + 2);
+	buf = calloc(_strlen(var) + _strlen(val) + 2, sizeof(char));
 	if (!buf)
 		return (1);
 	_strcpy(buf, var);
@@ -75,13 +75,18 @@ int _setenv(info_t *inf, char *var, char *val)
 	n = inf->env;
 	while (n)
 	{
-		a = starts_with(n->s, var);
+		a = starts_with(n->str, var);
 		if (a && *a == '=')
 		{
-			free(n->s);
-			n->s = buf;
+			free(n->str);
+			n->str = buf;
 			inf->env_changed = 1;
 			return (0);
 		}
 		n = n->next;
 	}
+	add_node_end(&(inf->env), buf, 0);
+	free(buf);
+	inf->env_changed = 1;
+	return (0);
+}

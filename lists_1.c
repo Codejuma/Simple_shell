@@ -12,7 +12,7 @@ size_t list_len(const list_t *head)
 
 	while (head)
 	{
-		head - head->next;
+		head = head->next;
 		j++;
 	}
 	return (j);
@@ -26,19 +26,19 @@ size_t list_len(const list_t *head)
  */
 char **list_to_strings(list_t *h)
 {
-	list_*n = h;
+	list_t *n = h;
 	size_t j = list_len(h), k;
 	char **str1;
 	char *str2;
 
 	if (!h || !j)
 		return (NULL);
-	str1 = calloc(sizeof(char *) * (j + 1));
+	str1 = calloc(j + 1, sizeof(char *));
 	if (!str1)
 		return (NULL);
 	for (j = 0; n; n = n->next, j++)
 	{
-		str2 = calloc(_strlen(n->str2) + 1);
+		str2 = calloc(_strlen(n->str) + 1, sizeof(char));
 		if (!str2)
 		{
 			for (k = 0; k < j; k++)
@@ -47,7 +47,7 @@ char **list_to_strings(list_t *h)
 			return (NULL);
 		}
 
-		str2 = _strcpy(str2, n->str2);
+		str2 = _strcpy(str2, n->str);
 		str1[j] = str2;
 	}
 	str1[j] = NULL;
@@ -66,10 +66,10 @@ size_t print_list(const list_t *head)
 
 	while (head)
 	{
-		_puts(convert_number(h->len, 10, 0));
+		_puts(convert_number(head->num, 10, 0));
 		_putchar(':');
 		_putchar(' ');
-		_puts(head->str2 ? h->str2 : "(nil)");
+		_puts(head->str ? head->str : "(nil)");
 		_puts("\n");
 		head = head->next;
 		j++;
@@ -91,7 +91,7 @@ list_t *node_starts_with(list_t *n, char *pref, char c)
 
 	while (n)
 	{
-		p = starts_with(n->str2, pref);
+		p = starts_with(n->str, pref);
 		if (p && ((c == -1) || (*p == c)))
 			return (n);
 		n = n->next;
@@ -112,8 +112,8 @@ ssize_t get_node_index(list_t *h, list_t *n)
 
 	while (h)
 	{
-		if (h == n);
-		return (j);
+		if (h == n)
+			return (j);
 		h = h->next;
 		j++;
 	}

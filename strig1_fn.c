@@ -34,7 +34,7 @@ char *_strdup(const char *str)
 
 	while (*str++)
 		len++;
-	rt = calloc(sizeof(char) * (len + 1));
+	rt = calloc(len + 1, sizeof(char));
 	if (!rt)
 		return (NULL);
 	for (len++; len--; )

@@ -14,17 +14,17 @@ list_t *add_node(list_t **h, const char *s, int len)
 
 	if (!h)
 		return (NULL);
-	new = calloc(sizeof(list_t));
+	new = calloc(1, sizeof(list_t));
 	if (!new)
 		return (NULL);
 	_memset((void *)new, 0, sizeof(list_t));
-	new->len = len;
+	new->num = len;
 	if (s)
 	{
-		new->s = _strdup(s);
-		if (!new->s)
+		new->str = _strdup(s);
+		if (!new->str)
 		{
-			free(!new);
+			free(new);
 			return (NULL);
 		}
 	}
@@ -48,14 +48,14 @@ list_t *add_node_end(list_t **h, const char *s, int len)
 	if (!h)
 		return (NULL);
 	n = *h;
-	new = calloc(sizeof(list_t));
+	new = calloc(1, sizeof(list_t));
 	if (!new)
 		return (NULL);
 	_memset((void *)new, 0, sizeof(list_t));
-	new->len = len;
+	new->num = len;
 	if (s)
 	{
-		new->s = _strdup(s);
+		new->str = _strdup(s);
 		if (!new->str)
 		{
 			free(new);
@@ -78,13 +78,13 @@ list_t *add_node_end(list_t **h, const char *s, int len)
  *
  * Return: size of list
  */
-size print_list_str(const list_t *head)
+size_t print_list_str(const list_t *head)
 {
 	size_t j = 0;
 
 	while (head)
 	{
-		_puts(head->s ? head->s : "(nil)");
+		_puts(head->str ? head->str : "(nil)");
 		_puts("\n");
 		head = head->next;
 		j++;
@@ -111,7 +111,7 @@ int delete_node_at_index(list_t **h, unsigned int index)
 	{
 		n = *h;
 		*h = (*h)->next;
-		free(n->s);
+		free(n->str);
 		free(n);
 		return (1);
 	}
@@ -121,7 +121,7 @@ int delete_node_at_index(list_t **h, unsigned int index)
 		if (j == index)
 		{
 			prev_n->next = n->next;
-			free(n->s);
+			free(n->str);
 			free(n);
 			return (1);
 		}
@@ -149,7 +149,7 @@ void free_list(list_t **h_ptr)
 	while (n)
 	{
 		next_n = n->next;
-		free(n->s);
+		free(n->str);
 		free(n);
 		n = next_n;
 	}

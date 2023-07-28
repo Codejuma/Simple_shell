@@ -4,7 +4,7 @@
  * @inf: struc args
  * Return: return exit 0
  */
-int _myexit(infor_t *inf)
+int _myexit(info_t *inf)
 {
 	int i;
 
@@ -32,7 +32,7 @@ int _myexit(infor_t *inf)
  */
 int _mycd(info_t *inf)
 {
-	char *s, dirr, buffer[1024];
+	char *s, *dirr, buffer[1024];
 	int j;
 
 	s = getcwd(buffer, 1024);
@@ -43,7 +43,7 @@ int _mycd(info_t *inf)
 		dirr = _getenv(inf, "HOME=");
 		if (!dirr)
 			j = /* TODO: what should this be? */
-				chdir((dirr = _getenv(info, "PWD=")) ? dirr : "/");
+				chdir((dirr = _getenv(inf, "PWD=")) ? dirr : "/");
 		else
 			j = chdir(dirr);
 	}

@@ -1,4 +1,4 @@
-#include "main."
+#include "main.h"
 /**
  * list_len - func looks len list
  * @fn: first head ptr
@@ -29,12 +29,12 @@ char **list_to_strings(list_t *fn)
 
 	if (!fn || !j)
 		return (NULL);
-	sts = malloc(sizeof(char *) * (j + 1));
+	sts = calloc(j + 1, sizeof(char *));
 	if (!sts)
 		return (NULL);
 	for (j = 0; nodd; nodd = nodd->next, j++)
 	{
-		st = calloc(_strlen(nodd->str) + 1);
+		st = calloc(_strlen(nodd->str) + 1, sizeof(char));
 		if (!st)
 		{
 			for (m = 0; m < j; m++)
@@ -48,4 +48,3 @@ char **list_to_strings(list_t *fn)
 	sts[j] = NULL;
 	return (sts);
 }
-

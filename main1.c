@@ -5,12 +5,12 @@
  * @av: arg vc
  * Return: 0 otherwise 1
  */
-int int main(int ac, char **av)
+int main(int ac, char **av)
 {
 	info_t inf[] = { INFO_INIT };
 	int j = 2;
 
-	asm ( "mov %1, %0\n\t"
+	asm ("mov %1, %0\n\t"
 			"add $3, %0"
 			: "=r" (j)
 			: "r" (j));
