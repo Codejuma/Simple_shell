@@ -40,7 +40,7 @@ void *_realloc(void *ptrr, unsigned int pre_size, unsigned int nxt_size)
 	char *k;
 
 	if (!ptrr)
-		return (void *)memset(calloc(1, nxt_size), 0, nxt_size);
+		return ((void *)memset(calloc(1, nxt_size), 0, nxt_size));
 	if (!nxt_size)
 		return (free(ptrr), NULL);
 	if (nxt_size == pre_size)
