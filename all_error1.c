@@ -54,7 +54,7 @@ int print_d(int j, int k)
 	unsigned int abs, current;
 
 	if (k == STDERR_FILENO)
-		_putchar = _eputchar;
+		__putchar = _eputchar;
 	if (j < 0)
 	{
 		abs = -j;
@@ -108,7 +108,7 @@ char *convert_number(long int num, int base, int flags)
 	} while (n != 0);
 
 	if (sign)
-		+--pr = sign;
+		*--pr = sign;
 	return (pr);
 }
 /**
@@ -123,7 +123,7 @@ void remove_comments(char *buf)
 	for (j = 0; buf[j] != '\0'; j++)
 		if (buf[j] == '#' && (!j || buf[j - 1] == ' '))
 		{
-			buf[j] - '\0';
+			buf[j] = '\0';
 			break;
 		}
 }

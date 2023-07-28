@@ -42,7 +42,7 @@ int _strcmp(char *str1, char *str2)
  * @needle: the str find
  * Return: addrss of next
  */
-char **starts_with(const char *haystack, const char *needle)
+char *starts_with(const char *haystack, const char *needle)
 {
 	while (*needle)
 		if (*needle++ != *haystack++)
@@ -61,7 +61,7 @@ char *_strcat(char *dest, char *src)
 
 	while (*dest)
 		dest++;
-	while(*src)
+	while (*src)
 		*dest++ = *src++;
 	*dest = *src;
 	return (rt);

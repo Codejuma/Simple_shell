@@ -7,7 +7,7 @@
 int _myhistory(info_t *inf)
 {
 	print_list(inf->history);
-	return 0;
+	return (0);
 }
 /**
  * unset_alias - func set alias
@@ -22,11 +22,12 @@ int unset_alias(info_t *inf, char *s)
 
 	k = _strchr(s, '=');
 	if (!k)
-		return 1;
+		return (1);
 
 	b = *k;
 	*k = 0;
-	rt = delete_node_at_index(&(inf->alias), get_node_index(inf->alias, node_starts_with(inf->alias, s, -1)));
+	rt = delete_node_at_index(&(inf->alias),
+	get_node_index(inf->alias, node_starts_with(inf->alias, s, -1)));
 	*k = b;
 	return (rt);
 }
@@ -50,7 +51,7 @@ int set_alias(info_t *inf, char *s)
 	return (add_node_end(&(inf->alias), s, 0) == NULL);
 }
 /**
- * print-alias - print alias str
+ * print_alias - print alias str
  * @nodd: the alias
  * Return: 0 or 1
  */

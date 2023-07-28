@@ -20,14 +20,14 @@ int is_chain(info_t *inf, char *buff, size_t *p1)
 	}
 	else if (buff[k] == '&' && buff[k + 1] == '&')
 	{
-		buf[k] = 0;
+		buff[k] = 0;
 		k++;
 		inf->cmd_buf_type = CMD_AND;
 	}
 	else if (buff[k] == ';') /* end of command */
 	{
 		buff[k] = 0; /* replace semicolon with NULL */
-		inf->cmd_buf_tyoe = CMD_CHAIN;
+		inf->cmd_buf_type = CMD_CHAIN;
 	}
 	else
 		return (0);
@@ -87,10 +87,10 @@ int replace_alias(info_t *inf)
 		if (!n)
 			return (0);
 		free(inf->argv[0]);
-		p1 _strchr(n->s, '=');
+		p1 =  _strchr(n->str, '=');
 		if (!p1)
 			return (0);
-		p1 = _strup(p1 + 1);
+		p1 = _strdup(p1 + 1);
 		if (!p1)
 			return (0);
 		inf->argv[0] = p1;
@@ -116,11 +116,11 @@ int replace_vars(info_t *inf)
 
 		if (!_strcmp(inf->argv[s1], "$?"))
 		{
-			replace_string(&(inf->[s1]),
+			replace_string(&(inf->argv[s1]),
 				_strdup(convert_number(inf->status, 10, 0)));
 			continue;
 		}
-		if (__strcmp(inf->argv[s1], "$$"))
+		if (_strcmp(inf->argv[s1], "$$"))
 		{
 			replace_string(&(inf->argv[s1]),
 					_strdup(convert_number(getpid(), 10, 0)));
@@ -129,11 +129,11 @@ int replace_vars(info_t *inf)
 		n = node_starts_with(inf->env, &inf->argv[s1][1], '=');
 		if (n)
 		{
-			replace_string(&(inf->[s1]),
-					_strdup(_strchr(n->s, '=') + 1));
+			replace_string(&(inf->argv[s1]),
+					_strdup(_strchr(n->str, '=') + 1));
 			continue;
 		}
-		replace_string(&inf->argv[s1], _strup(""));
+		replace_string(&inf->argv[s1], _strdup(""));
 
 	}
 	return (0);
@@ -141,14 +141,14 @@ int replace_vars(info_t *inf)
 
 /**
  * replace_string - replaces string
- * @i1: old string
- * @i2: new string
+ * @i_1: old string
+ * @i_2: new string
  *
  * *Return: 1 if replaced, otherwise 0
  */
-int replace_string(char *i1, char i2)
+int replace_string(char **i_1, char *i_2)
 {
-	free(*i1);
-	*i1 = i2;
+	free(*i_1);
+	*i_1 = i_2;
 	return (1);
 }

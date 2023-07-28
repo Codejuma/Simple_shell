@@ -28,9 +28,9 @@ char *_getenv(info_t *inf, const char *nam)
 		nodd = nodd->next;
 	}
 	return (NULL);
-} 
+}
 /**
- * mysetenv - funct of new env
+ * _mysetenv - funct of new env
  * @inf: struct have args
  * Return: 0
  */
@@ -41,7 +41,7 @@ int _mysetenv(info_t *inf)
 		_eputs("Incorrect number of arguements\n");
 		return (1);
 	}
-	if (_setenv(inf, inf->argv[1], info->argv[2]))
+	if (_setenv(inf, inf->argv[1], inf->argv[2]))
 		return (0);
 	return (1);
 }

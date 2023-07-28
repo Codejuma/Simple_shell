@@ -34,7 +34,7 @@ int hsh(info_t *inf, char **avg)
 		exit(inf->status);
 	if (j == -2)
 	{
-		if (inf->err-num == -1)
+		if (inf->err_num == -1)
 			exit(inf->status);
 		exit(inf->err_num);
 	}
@@ -85,8 +85,8 @@ void find_cmd(info_t *inf)
 		inf->line_count++;
 		inf->linecount_flag = 0;
 	}
-	for (i = 0, j = 0; info->arg[i]; i++)
-		if (!is_delim(info->arg[i], " \t\n"))
+	for (i = 0, j = 0; inf->arg[i]; i++)
+		if (!is_delim(inf->arg[i], " \t\n"))
 			j++;
 	if (!j)
 		return;
@@ -99,7 +99,8 @@ void find_cmd(info_t *inf)
 	}
 	else
 	{
-		if ((interactive(inf) || _getenv(inf, "PATH=") || inf->argv[0][0] == '/') && is_cmd(inf, inf->argv[0]))
+		if ((interactive(inf) || _getenv(inf, "PATH=") ||
+	inf->argv[0][0] == '/') && is_cmd(inf, inf->argv[0]))
 			fork_cmd(inf);
 		else if (*(inf->arg) != '\n')
 		{
