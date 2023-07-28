@@ -10,7 +10,7 @@
 char **strtow(char *s, char *del)
 {
 	int j, k, r, q, numwords = 0;
-	char **m;
+	char **m = NULL;
 
 	if (s == NULL || s[0] == 0)
 		return (NULL);
@@ -29,6 +29,7 @@ char **strtow(char *s, char *del)
 	{
 		while (is_delim(s[j], del))
 			j++;
+
 		r = 0;
 		while (!is_delim(s[j + r], del) && s[j + r])
 			r++;
@@ -47,7 +48,6 @@ char **strtow(char *s, char *del)
 	m[k] = NULL;
 	return (m);
 }
-
 /**
  * **strtow1 - split string)
  * @s: input string
@@ -57,13 +57,13 @@ char **strtow(char *s, char *del)
 char **strtow1(char *s, char del)
 {
 	int j, k, r, q, numwords = 0;
-	char **m;
+	char **m = NULL;
 
 	if (s == NULL || s[0] == 0)
 		return (NULL);
 	for (j = 0; s[j] != '\0'; j++)
 		if ((s[j] != del && s[j + 1] == del) ||
-		 (s[j] != del && !s[j + 1]) || s[j + 1] == del)
+				(s[j] != del && !s[j + 1]) || s[j + 1] == del)
 			numwords++;
 	if (numwords == 0)
 		return (NULL);
@@ -81,7 +81,7 @@ char **strtow1(char *s, char del)
 		if (!m[k])
 		{
 			for (r = 0; r < k; r++)
-				free(m[r]);
+				free(m[k]);
 			free(m);
 			return (NULL);
 		}

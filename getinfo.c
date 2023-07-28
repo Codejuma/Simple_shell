@@ -27,7 +27,7 @@ void set_info(info_t *inf, char **avg)
 		inf->argv = strtow(inf->arg, " \t");
 		if (!inf->argv)
 		{
-			inf->argv = malloc(sizeof(char *) * 2);
+			inf->argv = (char **)calloc(2, sizeof(char *));
 			if (inf->argv)
 			{
 				inf->argv[0] = _strdup(inf->arg);
