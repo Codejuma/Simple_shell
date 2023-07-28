@@ -11,7 +11,6 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <fcntl.h>
 #define TOK_BUFSIZE 50
 #define TOK_DELIM " \t\r\n\a"
 extern char **environ;
@@ -131,8 +130,8 @@ int loophsh(char **);
 /* toem_errors.c */
 void _eputs(char *);
 int _eputchar(char);
-int _putfd(char c, int fd);
-int _putsfd(char *str, int fd);
+int _putfd(char, int);
+int _putsfd(char *, int);
 
 /* toem_string.c */
 int _strlen(char *);
@@ -208,11 +207,11 @@ int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
 
 /* toem_history.c */
-char *get_history_file(info_t *info);
-int write_history(info_t *info);
-int read_history(info_t *info);
-int build_history_list(info_t *info, char *buf, int linecount);
-int renumber_history(info_t *info);
+char *get_history_file(info_t *);
+int write_history(info_t *);
+int read_history(info_t *);
+int build_history_list(info_t *, char *, int);
+int renumber_history(info_t *);
 
 /* toem_lists.c */
 list_t *add_node(list_t **, const char *, int);
